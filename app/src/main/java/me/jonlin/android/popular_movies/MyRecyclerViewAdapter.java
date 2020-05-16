@@ -4,22 +4,30 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.squareup.picasso.Picasso;
+import java.util.List;
+import me.jonlin.android.popular_movies.model.Movie;
+
 /*
-@https://stackoverflow.com/questions/40587168/simple-android-grid-example-using-recyclerview-with-gridlayoutmanager-like-the
+Zhttps://stackoverflow.com/questions/40587168/simple-android-grid-example-using-recyclerview-with-gridlayoutmanager-like-the
  */
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
+    final String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/w185";
 
-    private String[] mData; //images
+    private String[] mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private Context mContext;
 
     // data is passed into the constructor
     MyRecyclerViewAdapter(Context context, String[] data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        this.mContext = context;
     }
 
     // inflates the cell layout from xml when needed
@@ -30,11 +38,22 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         return new ViewHolder(view);
     }
 
-    //TODO: bind image here. PICASSO thingy.
     // binds the data to the TextView in each cell
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.myTextView.setText(mData[position]);
+        List<Movie> movies = MoviesSingleton.getInstance();
+        if(!movies.isEmpty() && position < movies.size()) {
+            String posterImageURL = BASE_IMAGE_URL + movies.get(position).getPosterThumbnail();
+            Picasso.with(mContext).load(posterImageURL).into(holder.myTextView);
+
+        }
+        else {
+            holder.myTextView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.stockimg));
+        }
+
+
+        //TODO piccaoso redo
+//        holder.myTextView.setImage(mData[position]);
 
     }
 
@@ -47,11 +66,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView myTextView;
+        ImageView myTextView;
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.info_text);
+            myTextView = itemView.findViewById(R.id.image_iv);
             itemView.setOnClickListener(this);
         }
 
