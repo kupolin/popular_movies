@@ -30,7 +30,9 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 
     final String URL
         = "https://api.themoviedb.org/3/discover/movie?api_key=2d96c730bfd2d4cfd946208865cdce04&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
-    final String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/w185";
+    final static String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/original";
+//    /w185
+
     final static public String API_KEY = "2d96c730bfd2d4cfd946208865cdce04";
 
     // http://image.tmdb.org/t/p/w185/???/2d96c730bfd2d4cfd946208865cdce04.jpg
@@ -108,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.rvNumbers);
-        int numberOfColumns = 3;
+        int numberOfColumns = 2;
         recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         adapter = new MyRecyclerViewAdapter(this, data);
         adapter.setClickListener(this);

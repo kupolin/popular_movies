@@ -1,6 +1,7 @@
 package me.jonlin.android.popular_movies.utils;
 
 
+import android.util.Log;
 import java.io.IOException;
 import java.util.List;
 import me.jonlin.android.popular_movies.MoviesSingleton;
@@ -15,7 +16,7 @@ public class JsonUtils {
 
     public static List<Movie> parseMovieJson(String json) {
         final String resultsStr = "results";
-        final String originalTitleStr = "originalTitleStr";
+        final String originalTitleStr = "original_title";
         final String posterImageStr = "poster_path";
         final String sypnosisStr = "overview";
         final String userRating = "vote_average";
@@ -39,12 +40,12 @@ public class JsonUtils {
      */
             JSONArray resultsJSONArray = jsonObject.getJSONArray(resultsStr);
             //list of movies in resultsJSONArray
+            Log.d("testt", "json: " + resultsJSONArray.length());
             for (int i = 0; i < resultsJSONArray.length(); i++) {
                 Movie model = new Movie();
                 MoviesSingleton.getInstance().add(model);
 
                 JSONObject movieJSONObj = resultsJSONArray.getJSONObject(i);
-
                 model.setPosterThumbnail(movieJSONObj.getString(posterImageStr));
                 model.setOriginalTitle(movieJSONObj.getString(originalTitleStr));
                 model.setReleaseDate(movieJSONObj.getString(releaseDate));

@@ -1,6 +1,7 @@
 package me.jonlin.android.popular_movies;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import me.jonlin.android.popular_movies.model.Movie;
 Zhttps://stackoverflow.com/questions/40587168/simple-android-grid-example-using-recyclerview-with-gridlayoutmanager-like-the
  */
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
-    final String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/w185";
 
     private String[] mData;
     private LayoutInflater mInflater;
@@ -42,15 +42,36 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         List<Movie> movies = MoviesSingleton.getInstance();
-        if(!movies.isEmpty() && position < movies.size()) {
-            String posterImageURL = BASE_IMAGE_URL + movies.get(position).getPosterThumbnail();
-            Picasso.with(mContext).load(posterImageURL).into(holder.myTextView);
+    //    for(int i = 0; i < movies.size(); i++)
+      //      Log.d("testt", "i = " + i + "| "+ movies.size() + "| " + MoviesSingleton.getInstance().size() + movies.get(i).getPosterThumbnail());
+        if(movies.isEmpty())
+            return;
 
+
+        Picasso.with(mContext).load(MainActivity.BASE_IMAGE_URL + movies.get(position).getPosterThumbnail()).into(holder.myTextView);
+        //Test works on other sandwich jpg
+//        Picasso.with(mContext).load("http://image.tmdb.org/t/p/original/c01Y4suApJ1Wic2xLmaq1QYcfoZ.jpg").into(holder.myTextView);
+
+
+        //             posterImageURL = BASE_IMAGE_URL + movies.get(position).getPosterThumbnail();
+//        Log.d("testt", "position: " + position);
+//        Log.d("testt", "come inside" + posterImageURL);
+        /*
+        if(!movies.isEmpty() && position < movies.size()) {
+                Log.d("testt", position + " | " + movies.size());
+                String posterImageURL = BASE_IMAGE_URL + movies.get(position).getPosterThumbnail();
+//            String posterImageURL = BASE_IMAGE_URL + movies.get(0).getPosterThumbnail();
+
+                Log.d("testt", "come inside" + posterImageURL);
+                Picasso.with(mContext).load("https://upload.wikimedia.org/wikipedia/commons/c/ca/Bosna_mit_2_Bratw%C3%BCrsten.jpg").into(holder.myTextView);
         }
         else {
-            holder.myTextView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.stockimg));
+            Log.d("testt", "position: " + position);
+     //       holder.myTextView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.stockimg));
+              holder.myTextView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_background));
+              holder.myTextView.setVisibility(View.GONE);
         }
-
+*/
 
         //TODO piccaoso redo
 //        holder.myTextView.setImage(mData[position]);
@@ -60,7 +81,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // total number of cells
     @Override
     public int getItemCount() {
-        return mData.length;
+        return MoviesSingleton.getInstance().size();
     }
 
 
@@ -81,8 +102,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     // convenience method for getting data at click position
-    String getItem(int id) {
-        return mData[id];
+    Movie getItem(int id) {
+        return MoviesSingleton.getInstance().get(id);
     }
 
     // allows clicks events to be caught
