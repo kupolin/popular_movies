@@ -15,8 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.squareup.picasso.Picasso;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 import me.jonlin.android.popular_movies.model.Movie;
 import me.jonlin.android.popular_movies.utils.JsonUtils;
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 
     final String URL
         = "https://api.themoviedb.org/3/discover/movie?api_key=2d96c730bfd2d4cfd946208865cdce04&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
-    final static String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/original";
+    final static String BASE_IMAGE_URL = "https://image.tmdb.org/t/p/original";
 //    /w185
 
     final static public String API_KEY = "2d96c730bfd2d4cfd946208865cdce04";

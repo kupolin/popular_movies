@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
+import java.util.ArrayList;
 import java.util.List;
 import me.jonlin.android.popular_movies.model.Movie;
 
@@ -115,4 +116,5 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }
+
 }
