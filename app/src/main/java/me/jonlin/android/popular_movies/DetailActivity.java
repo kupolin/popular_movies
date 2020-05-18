@@ -63,14 +63,14 @@ public class DetailActivity extends AppCompatActivity {
     vote average
     sypnosis
  */
-        TextView tv = findViewById(R.id.origin_tv);
+        TextView tv = findViewById(R.id.release_date);
         tv.setText(model.getOriginalTitle());
 
         ImageView iv = findViewById(R.id.image_iv);
         // library to get images from the web.
         Log.d("testt", model.getPosterThumbnail());
         // into(ImageView ) sets url to ImageView for you
-        Picasso.with(this).load(model.getPosterThumbnail()).into(iv);
+        Picasso.with(this).load(MainActivity.BASE_IMAGE_URL + model.getPosterThumbnail()).into(iv);
 
         tv = findViewById(R.id.release_date);
         tv.setText(model.getReleaseDate());
