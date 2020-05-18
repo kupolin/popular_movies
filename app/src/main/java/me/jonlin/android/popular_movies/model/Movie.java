@@ -1,9 +1,7 @@
 package me.jonlin.android.popular_movies.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Movie {
+
     /*
     original title
     movie poster image thumbnail
@@ -25,19 +23,25 @@ public class Movie {
     /**
      * No args constructor for use in serialization
      */
-    public Movie() {}
-
-    public void setOriginalTitle(final String originalTitle) {
-        this.originalTitle = originalTitle;
+    public Movie() {
     }
 
-    public Movie(String originalTitle, String posterThumbnail, String sypnosis, String userRating, String releaseDate)
-    {
+
+    public Movie(String originalTitle, String posterThumbnail, String sypnosis, String userRating,
+        String releaseDate) {
         this.originalTitle = originalTitle;
         this.posterThumbnail = posterThumbnail;
         this.synopsis = sypnosis;
         this.userRating = userRating;
         this.releaseDate = releaseDate;
+    }
+
+    public void setOriginalTitle(final String originalTitle) {
+        this.originalTitle = originalTitle;
+    }
+
+    public String getOriginalTitle() {
+        return originalTitle;
     }
 
     public String getPosterThumbnail() {

@@ -19,7 +19,6 @@ Zhttps://stackoverflow.com/questions/40587168/simple-android-grid-example-using-
  */
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
-    private String[] mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     private Context mContext;
@@ -27,7 +26,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // data is passed into the constructor
     MyRecyclerViewAdapter(Context context, String[] data) {
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
         this.mContext = context;
     }
 
@@ -102,7 +100,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         }
     }
 
-    // convenience method for getting data at click position
+    // convenience method for getting
+    // at click position
     Movie getItem(int id) {
         return MoviesSingleton.getInstance().get(id);
     }
