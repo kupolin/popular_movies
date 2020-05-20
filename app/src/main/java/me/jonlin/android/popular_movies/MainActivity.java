@@ -29,12 +29,38 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
 
-    final String URL
-        = "https://api.themoviedb.org/3/discover/movie?api_key=2d96c730bfd2d4cfd946208865cdce04&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
-    final static String BASE_IMAGE_URL = "https://image.tmdb.org/t/p/original";
-//    /w185
+    /*
+        final String URL
+            = "https://api.themoviedb.org/3/discover/movie?api_key=2d96c730bfd2d4cfd946208865cdce04&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
+        final String POPULARITYURL =
+            "https://api.themoviedb.org/3/discover/movie?api_key=2d96c730bfd2d4cfd946208865cdce04&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
+        final String HIGHESTRATEDURL = "https://api.themoviedb.org/3/discover/movie?api_key=2d96c730bfd2d4cfd946208865cdce04&language=en-US&sort_by=vote_count.desc&include_adult=false&include_video=false&page=1";
+    */
+    String API_KEY = "2d96c730bfd2d4cfd946208865cdce04";
 
-    final static public String API_KEY = "2d96c730bfd2d4cfd946208865cdce04";
+    String PRE_QUERY_URL = "https://api.themoviedb.org/3/discover/movie?api_key=";
+
+    String POST_QUERY_URL = "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
+
+    final static String BASE_IMAGE_URL = "https://image.tmdb.org/t/p/original";
+
+    /*
+    @param String apiKey - api key
+    @param sortBy - sort by with most popular or highest rated. Keywords "popular", "rated"
+     */
+    String queryUrl(String apiKey, String sortBy) {
+        String retStr = PRE_QUERY_URL + API_KEY + POST_QUERY_URL;
+
+        switch (sortBy) {
+            case "popular":
+                break;
+            case "rated":
+                retStr = retStr.replaceFirst("popularity.desc", "vote_count.desc");
+        }
+        return retStr;
+    }
+    //URL String sort_by method. base url + sort_by + &;
+//    /w185
 
     // http://image.tmdb.org/t/p/w185/???/2d96c730bfd2d4cfd946208865cdce04.jpg
 //    use bottom one:
@@ -42,87 +68,59 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 //https://api.themoviedb.org/3/search/movie?api_key={api_key}&query=Jack+Reacher
     MyRecyclerViewAdapter adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         String json = null;
+       // setSupportActionBar(findViewById(R.id.toolbar));
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Movies");
+        /*
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
 
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
 
+                if(item.getItemId()==R.id.item1)
+                {
+                    // do something
+                }
+                else if(item.getItemId()== R.id.filter)
+                {
+                    // do something
+                }
+                else{
+                    // do something
+                }
 
-
-
-
+                return false;
+            }
+        });*/
+        setSupportActionBar(toolbar);
+//        toolbar.inflateMenu(R.menu.menu_main);
 //        Sandwich sandwich = JsonUtils.parseSandwichJson(json);
 
 //TODO force refresh problem
         //TODO CloseOnError error handling. No internet connection.
 // avoid creating several instances, should be singleon
-        final OkHttpClient client = new OkHttpClient();
-        final okhttp3.Request request = new okhttp3.Request.Builder()
-            .url(URL)
-            .build();
-
-        final Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Response response = client.newCall(request).execute();
-                    //TODO update mAdapter.notifyDataSetChanged();
-                    String json = response.body().string();
-                  //  Log.d("testt", response.body().string());
-
-                    JsonUtils.parseMovieJson(json);
-                    MainActivity.this.runOnUiThread(new Runnable(){
-                        @Override
-                        public void run()
-                        {
-                            //MainActivity.this.populateUI();
-                            MainActivity.this.adapter.notifyDataSetChanged();
-                        }
-                    });
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.start();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // data to populate the RecyclerView with
-        String[] data = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17",
-            "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34",
-            "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48"};
+        updateMovieList("popular");
 
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.rvNumbers);
         int numberOfColumns = 2;
         recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
-        adapter = new MyRecyclerViewAdapter(this, data);
+        adapter = new MyRecyclerViewAdapter(this);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
     }
 
-        void populateUI() {
+    void populateUI() {
 
         List<Movie> moviesList = MoviesSingleton.getInstance();
-        for(Movie movie : moviesList) {
+        for (Movie movie : moviesList) {
             //TODO: actionbar main title
             String posterImageURL = BASE_IMAGE_URL + movie.getPosterThumbnail();
             ImageView iv = findViewById(R.id.image_iv);
@@ -155,21 +153,29 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         }
     }
 
-    private class Query {
-        OkHttpClient client = new OkHttpClient();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
-        String run(String url) throws IOException {
-            Request request = new okhttp3.Request.Builder()
-                .url(url)
-                .build();
 
-            try (Response response = client.newCall(request).execute()) {
-                return response.body().string();
-            }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.menu_popular:
+                updateMovieList("popular");
+                break;
+            case R.id.menu_rated:
+                updateMovieList("rated");
+                break;
+
+            default:
         }
-
-}
-
+        return true;
+    }
 
     @Override
     public void onItemClick(View view, int position) {
@@ -181,5 +187,41 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 
         Toast.makeText(this, "test:" + position, Toast.LENGTH_SHORT).show();
     }
-}
 
+    /*
+        @param sortBy - sort by with most popular or highest rated. Keywords "popular", "rated"
+    */
+    void updateMovieList(final String sortBy) {
+
+        final Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    MoviesSingleton.getInstance().clear();
+                    final OkHttpClient client = new OkHttpClient();
+                    final okhttp3.Request request = new okhttp3.Request.Builder()
+                        .url(queryUrl(API_KEY, sortBy))
+                        .build();
+
+                    Response response = client.newCall(request).execute();
+                    //TODO update mAdapter.notifyDataSetChanged();
+                    String json = response.body().string();
+                    //  Log.d("testt", response.body().string());
+
+                    JsonUtils.parseMovieJson(json);
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //MainActivity.this.populateUI();
+                            MainActivity.this.adapter.notifyDataSetChanged();
+                        }
+                    });
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+}

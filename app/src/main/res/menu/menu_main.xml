@@ -1,10 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="me.jonlin.android.popular_movies.MainActivity">
+    tools:context="me.jonlin.android.popular_movies.MainActivity"
+    android:id="@+id/main_menu">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/menu_rated"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="highest rated"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_popular"
+        android:title="most popular" />
 </menu>
