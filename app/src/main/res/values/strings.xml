@@ -2,7 +2,7 @@
     <string name="app_name">popular_movies</string>
     <string name="action_settings">Settings</string>
     <!-- Error messages-->
-    <string name="detail_error_message">Sandwich data not available</string>
+    <string name="detail_error_message">Movie data not available</string>
     <!-- Labels -->
     <string name="sypnosis_label">sypnosis: </string>
     <string name="vote_average_label">vote average: </string>

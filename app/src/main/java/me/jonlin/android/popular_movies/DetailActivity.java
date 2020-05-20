@@ -9,16 +9,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.squareup.picasso.Picasso;
 import me.jonlin.android.popular_movies.model.Movie;
-import me.jonlin.android.popular_movies.utils.JsonUtils;
 
 public class DetailActivity extends AppCompatActivity {
-/*
-    title
-    movie poster
-    release date
-    vote average
-    sypnosis
- */
+
     public static final String EXTRA_POSITION = "extra_position";
 
     private static final int DEFAULT_POSITION = -1;
@@ -26,7 +19,6 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_detail);
 
         Intent intent = getIntent();
@@ -56,13 +48,13 @@ public class DetailActivity extends AppCompatActivity {
      */
     private void populateUI(Movie model) {
         setTitle(model.getOriginalTitle());
-/*
-    title
-    movie poster
-    release date
-    vote average
-    sypnosis
- */
+        /*
+            title
+            movie poster
+            release date
+            vote average
+            sypnosis
+         */
         TextView tv = findViewById(R.id.release_date);
         tv.setText(model.getOriginalTitle());
 

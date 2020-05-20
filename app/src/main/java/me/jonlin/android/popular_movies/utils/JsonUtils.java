@@ -2,7 +2,6 @@ package me.jonlin.android.popular_movies.utils;
 
 
 import android.util.Log;
-import java.io.IOException;
 import java.util.List;
 import me.jonlin.android.popular_movies.MoviesSingleton;
 import me.jonlin.android.popular_movies.model.Movie;
@@ -29,15 +28,13 @@ public class JsonUtils {
             //a JSONObject, JSONArray, String, Boolean, Integer, Long, Double or JSONObject#NULL.
             JSONObject jsonObject = (JSONObject) tokener.nextValue();
 
-//          (String mainName, List<String> alsoKnownAs  , String placeOfOrigin, String description, String image,
-//           List<String> ingredients)
-    /*
-    original title
-    movie poster image thumbnail
-    A plot synopsis (called overview in the api)
-    user rating (called vote_average in the api)
-    release date
-     */
+            /*
+                original title
+                movie poster image thumbnail
+                A plot synopsis (called overview in the api)
+                user rating (called vote_average in the api)
+                release date
+             */
             JSONArray resultsJSONArray = jsonObject.getJSONArray(resultsStr);
             //list of movies in resultsJSONArray
             Log.d("testt", "json: " + resultsJSONArray.length());

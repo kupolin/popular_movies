@@ -2,13 +2,6 @@ package me.jonlin.android.popular_movies.model;
 
 public class Movie {
 
-    /*
-    original title
-    movie poster image thumbnail
-    A plot synopsis (called overview in the api)
-    user rating (called vote_average in the api)
-    release date
-     */
     private String originalTitle;
 
     private String posterThumbnail;
@@ -19,12 +12,7 @@ public class Movie {
 
     private String releaseDate;
 
-
-    /**
-     * No args constructor for use in serialization
-     */
-    public Movie() {
-    }
+    public Movie() {}
 
 
     public Movie(String originalTitle, String posterThumbnail, String sypnosis, String userRating,
