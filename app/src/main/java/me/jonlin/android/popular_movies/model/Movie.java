@@ -1,6 +1,14 @@
 package me.jonlin.android.popular_movies.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "Movie")
 public class Movie {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
     private String originalTitle;
 
@@ -12,7 +20,8 @@ public class Movie {
 
     private String releaseDate;
 
-    public Movie() {}
+    public Movie() {
+    }
 
 
     public Movie(String originalTitle, String posterThumbnail, String sypnosis, String userRating,
@@ -22,6 +31,14 @@ public class Movie {
         this.synopsis = sypnosis;
         this.userRating = userRating;
         this.releaseDate = releaseDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setOriginalTitle(final String originalTitle) {

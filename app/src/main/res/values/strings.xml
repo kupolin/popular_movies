@@ -9,4 +9,6 @@
 
     <string name="release_date_label">release date: </string>
     <string name="movie_picture_content_description">movie picture: </string>
+
+    <string name="favorite">favorite </string>
 </resources>

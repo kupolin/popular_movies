@@ -1,5 +1,6 @@
 package me.jonlin.android.popular_movies;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,7 +42,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // binds the data to the TextView in each cell
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        List<Movie> movies = MoviesSingleton.getInstance();
+        List<Movie> movies = null;
+        if(MainActivity.favorite_movie_selected) {
+            //mContext base class is activity.
+            Log.d("testt", "mainviewmodel get instance");
+            movies = MainViewModel.getInstance(((Activity) mContext).getApplication()).getValue();
+        }
+            else
+            movies = MoviesSingleton.getInstance();
+
         if(movies.isEmpty())
             return;
 
